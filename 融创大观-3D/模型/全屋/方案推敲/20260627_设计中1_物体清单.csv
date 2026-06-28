@@ -1,0 +1,82 @@
+kind,category,room,code,wall_type,visual,name,material,renov_id,construction_system,construction_system_name,wall_role,w,d,h,cx,cy,cz,layer,sem_note,entity_id
+component,围护,主卧,T6,玻璃,blue_glass,T6,,,,,,2250,100,2900,10504,8027,1450,Layer0,待现场核对,441308
+component,围护,书房,T15,玻璃,blue_glass,T15,,,,,,2676,100,2912,9073,-21,1456,Layer0,待现场核对,693952
+component,围护,厨房,R05,玻璃,blue_glass,R05-B - middle glass band from R05 - M23 - glass_or_window_sill - source 19,glass,,,,,1276,200,1500,3583,869,1750,Layer0,窗带玻璃（非承重）,1193216
+component,围护,客卫,R06B,玻璃,blue_glass,R06B-B - middle glass band from R06B - M24B - glass_or_window_sill - source 29,glass,,,,,739,200,1500,6189,871,1750,Layer0,窗带玻璃（非承重）,1193202
+component,围护,客厅,T1,玻璃,blue_glass,T1,,,,,,4760,100,2900,3453,9027,1450,Layer0,待现场核对,269492
+component,围护,客厅,T2,玻璃,blue_glass,T2,,,,,,1214,100,2900,366,9027,1450,Layer0,待现场核对,269903
+component,围护,未分区,R10C,玻璃,blue_glass,R10C-B - middle glass band from R10C - M27C - glass_or_window_sill - source 47|48,glass,,,,,681,200,1500,11146,877,1750,Layer0,窗带玻璃（非承重）,1193205
+component,围护,次卧,T3,玻璃,blue_glass,T3,,,,,,1927,100,2900,6991,9025,1450,Layer0,待现场核对,331001
+component,墙体,主卧,R34B,承重墙,black,R34B - M54B - structure_candidate - source 77,structure,,,,,200,3534,2900,12177,5560,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193207
+component,墙体,主卧,R34C,普通墙,gray_white,R34C - M54C - partition_candidate - source 75|76,partition,,,,,200,559,2900,12177,7607,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193191
+component,墙体,主卧,R45,普通墙,gray_white,R45 - M05 - partition_candidate - source 72,partition,,,,,373,200,2900,9192,7993,1448,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193122
+component,墙体,主卧,R46,普通墙,gray_white,R46 - M07 - partition_candidate - source 74,partition,,,,,648,200,2900,11953,7986,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193125
+component,墙体,主卧,T10,普通墙,gray_white,T10,,,,,,1737,118,2921,9446,3800,1440,Layer0,待现场核对,459722
+component,墙体,主卧,T7,普通墙,gray_white,T7,,,,,,817,117,2878,11668,3852,1465,Layer0,待现场核对,441959
+component,墙体,书房,R03,普通墙,gray_white,R03 - M53 - partition_candidate - source 46,partition,,,,,100,742,2900,10361,400,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193185
+component,墙体,书房,R10B,承重墙,black,R10B - M27B - structure_candidate - source 39,structure,,,,,495,200,2900,10559,871,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193143
+component,墙体,书房,R17,承重墙,black,R17 - M52 - structure_candidate - source 40,structure,,,,,200,1830,2900,10411,1886,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193182
+component,墙体,书房,T12,承重墙,black,T12,,,,,,203,1844,2900,7644,1886,1450,Layer0,待现场核对,547211
+component,墙体,书房,T14,普通墙,gray_white,T14,,,,,,105,849,2912,7683,354,1444,Layer0,待现场核对,693863
+component,墙体,书房,T9,普通墙,gray_white,T9,,,,,,197,1058,2921,10413,3330,1443,Layer0,待现场核对,458870
+component,墙体,厨房,R05,普通墙,gray_white,R05-A - lower ordinary wall band from R05 - M23 - glass_or_window_sill - source 19,partition,,,,,1276,200,1000,3583,869,500,Layer0,灰/白线=填充隔墙，结构确认后可改,1193217
+component,墙体,厨房,R05,普通墙,gray_white,R05-C - upper ordinary wall band from R05 - M23 - glass_or_window_sill - source 19,partition,,,,,1276,200,400,3583,869,2700,Layer0,灰/白线=填充隔墙，结构确认后可改,1193200
+component,墙体,客卫,R02,普通墙,gray_white,R02 - M40 - partition_candidate - source 44,partition,,,,,100,758,2900,5551,385,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193167
+component,墙体,客卫,R06A,普通墙,gray_white,R06A - M24A - partition_candidate - source 20|21,partition,,,,,1602,200,2900,5021,869,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193134
+component,墙体,客卫,R06B,普通墙,gray_white,R06B-A - lower ordinary wall band from R06B - M24B - glass_or_window_sill - source 29,partition,,,,,739,200,1000,6189,871,500,Layer0,灰/白线=填充隔墙，结构确认后可改,1193201
+component,墙体,客卫,R06B,普通墙,gray_white,R06B-C - upper ordinary wall band from R06B - M24B - glass_or_window_sill - source 29,partition,,,,,739,200,400,6191,864,2700,Layer0,灰/白线=填充隔墙，结构确认后可改,1193203
+component,墙体,客卫,R07A,普通墙,gray_white,R07A - M25A - partition_candidate - source 30,partition,,,,,622,200,2900,6872,864,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193137
+component,墙体,客卫,R07B,承重墙,black,R07B - M25B - structure_candidate - source 31,structure,,,,,563,200,2900,7464,864,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193140
+component,墙体,客卫,R16,普通墙,gray_white,R16 - M39 - partition_or_sill - source 23,partition,,,,,100,1730,2900,4864,1830,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193164
+component,墙体,客卫,R21,普通墙,gray_white,R21 - M44 - partition_or_sill - source 34,partition,,,,,100,125,2900,7485,2744,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193173
+component,墙体,客卫,T11,普通墙,gray_white,T11,,,,,,103,1062,2508,7594,3339,1254,Layer0,待现场核对,546944
+component,墙体,客卫,T16,普通墙,gray_white,T16,,,,,,1973,117,2878,5800,2754,1465,Layer0,待现场核对,819306
+component,墙体,客厅,R39A,承重墙,black,R39A - M08A - structure_candidate - source 10,structure,,,,,765,200,2900,833,7227,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193210
+component,墙体,客厅,R43,普通墙,gray_white,R43 - M31 - partition_candidate - source 5,partition,,,,,200,718,2900,348,7696,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193152
+component,墙体,客厅,R48,普通墙,gray_white,R48 - M04 - partition_candidate - source 6,partition,,,,,1416,100,2900,365,8110,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193119
+component,墙体,客厅,R50,普通墙,gray_white,R50 - M35 - partition_candidate - source 9,partition,,,,,100,917,2900,1023,8619,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193158
+component,墙体,客厅,R52,普通墙,gray_white,R52 - M30 - partition_candidate - source 7,partition,,,,,100,917,2900,-293,8619,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193149
+component,墙体,客厅,T18,承重墙,black,T18,,,,,,209,6025,2900,347,4314,1450,Layer0,待现场核对,935187
+component,墙体,客厅,T22,普通墙,gray_white,T22,,,,,,69,2218,2846,2221,6016,1477,Layer0,待现场核对,1133896
+component,墙体,未分区,R09,普通墙,gray_white,R09 - M28 - partition_candidate - source 50,partition,,,,,592,200,2900,11783,871,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193146
+component,墙体,未分区,R10C,普通墙,gray_white,R10C-A - lower ordinary wall band from R10C - M27C - glass_or_window_sill - source 47|48,partition,,,,,681,200,1000,11146,877,500,Layer0,灰/白线=填充隔墙，结构确认后可改,1193204
+component,墙体,未分区,R10C,普通墙,gray_white,R10C-C - upper ordinary wall band from R10C - M27C - glass_or_window_sill - source 47|48,partition,,,,,681,200,400,11147,871,2700,Layer0,灰/白线=填充隔墙，结构确认后可改,1193206
+component,墙体,未分区,R34A,普通墙,gray_white,R34A - M54A - partition_candidate - source 51,partition,,,,,200,1403,2900,12178,3092,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193188
+component,墙体,未分区,T8,承重墙,black,T8,,,,,,200,1617,2900,12178,1581,1450,Layer0,待现场核对,442046
+component,墙体,次卧,R35B,承重墙,black,R35B - split upper structure from R35,structure,,,,,200,2400,2900,5928,6123,1450,Layer0,粗黑线=承重/剪力墙，禁止擅自拆除,1193194
+component,墙体,次卧,R37,承重墙,black,R37 - M50 - structure_candidate - source 66,structure,,,,,200,2200,2900,8906,6025,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193179
+component,墙体,次卧,R38,承重墙,black,R38 - M42 - structure_candidate - source 28|61,structure,,,,,155,200,2900,6103,7223,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193170
+component,墙体,次卧,R42B,承重墙,black,R42B - M11B - structure_candidate - source 64,structure,,,,,581,200,2900,8715,7225,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193128
+component,墙体,次卧,R51,普通墙,gray_white,R51 - M48 - partition_candidate - source 69,partition,,,,,100,882,2900,8856,8534,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193176
+component,墙体,次卧,R55,普通墙,gray_white,R55 - M03 - partition_candidate - source 70,partition,,,,,946,100,2900,8433,9025,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193116
+component,墙体,次卧,T13,普通墙,gray_white,T13,renov_new_wall,T13_bedroom_south_door_zone,②,室内普通墙,new_partition_door,1973,118,2878,7819,4985,1465,Layer0,v05 7150-8050 门洞分段不适用；本模型为 x=6832-8805 整段+西侧空档,1456124
+component,墙体,次卧,T4,普通墙,gray_white,T4,renov_new_wall,T4_study_expand,②,室内普通墙,new_partition,200,1753,2900,5928,8199,1450,Layer0,v05 CSV x=6181-6381 不适用；以本模型坐标为准,332150
+component,墙体,次卧,T5,普通墙,gray_white,T5,,,,,,200,770,2898,8906,7710,1451,Layer0,待现场核对,397815
+component,墙体,玄关,R12,普通墙,gray_white,R12 - M34 - partition_or_sill - source 1,partition,,,,,113,200,2900,508,1411,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193155
+component,墙体,衣帽间,R04,承重墙,black,R04 - M22 - structure_candidate - source 18,structure,,,,,984,200,2900,2446,869,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193131
+component,墙体,衣帽间,R11,承重墙,black,R11 - M37 - structure_candidate - source 13|17,structure,,,,,200,728,2900,1854,1133,1450,A2-RESULT-STRUCTURE-CANDIDATE,粗黑线=承重/剪力墙，禁止擅自拆除,1193161
+component,墙体,衣帽间,R13,普通墙,gray_white,R13 - M36 - partition_or_sill - source 12,partition,,,,,113,200,2900,1697,1397,1450,A2-RESULT-PARTITION-CANDIDATE,灰/白线=填充隔墙，结构确认后可改,1193213
+component,墙体,衣帽间,T20,普通墙,gray_white,T20,,,,,,108,204,258,2354,1158,2589,Layer0,待现场核对,1082897
+group,机电,厨房,,管道,gray_pipe,A2_DRAIN_PIPE_R16 - 50mm drain pipe facing smoke shaft,,,,,,140,50,50,4743,1164,300,Layer0,,173600
+component,机电,客卫,,普通墙,gray_white,A2_DRAIN_COMPLEX_DIAGONAL_APPROX_1 - angled small connector approx,drain_pipe_ivory,,,,,40,24,310,5129,1064,2745,Layer0,待现场核对,1193199
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_STACK_R16_6A_1 - 100mm vertical drain stack,,,,,,100,100,3300,5014,1064,1350,Layer0,,173601
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_STACK_R16_6A_2 - 100mm vertical drain stack,,,,,,100,100,3300,5144,1064,1350,Layer0,,173602
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_STACK_R16_6A_3 - 100mm vertical drain stack,,,,,,100,100,3300,5274,1064,1350,Layer0,,173603
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_TOILET_R18_R07A - 100mm upward toilet drain,,,,,,100,100,300,6395,1258,-10,Layer0,,173622
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_TOILET_R18_R07A_OPEN_TOP - upward opening marker,,,,,,100,100,0,6395,1258,142,Layer0,,173623
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_WASHBASIN_R18_R07A - 50mm upward washbasin drain,,,,,,50,50,240,7085,1088,0,Layer0,,173620
+group,机电,客卫,,管道,gray_pipe,A2_DRAIN_WASHBASIN_R18_R07A_OPEN_TOP - upward opening marker,,,,,,50,50,0,7085,1088,122,Layer0,,173621
+group,机电,未分区,,管道,gray_pipe,A2_DRAIN_SINK_R29_R15 - 50mm upward sink drain inside R34-R15-R09-R17-R29 room,,,,,,50,50,240,11968,3274,0,Layer0,,173624
+group,机电,未分区,,管道,gray_pipe,A2_DRAIN_SINK_R29_R15 - 50mm upward sink drain inside R34-R15-R09-R17-R29 room_OPEN_TOP - upward opening marker,,,,,,50,50,0,11968,3274,122,Layer0,,173625
+group,机电,未分区,,管道,gray_pipe,A2_DRAIN_STACK_R15_R09_1 - 100mm vertical drain stack,,,,,,100,100,3300,11978,1076,1350,Layer0,,173628
+group,机电,未分区,,管道,gray_pipe,A2_DRAIN_STACK_R15_R09_2 - 100mm vertical drain stack,,,,,,100,100,3300,11978,1206,1350,Layer0,,173629
+group,机电,未分区,,管道,gray_pipe,A2_DRAIN_TOILET_R29_R15 - 100mm upward toilet drain inside R34-R15-R09-R17-R29 room,,,,,,100,100,300,11778,2344,-10,Layer0,,173626
+group,机电,未分区,,管道,gray_pipe,A2_DRAIN_TOILET_R29_R15 - 100mm upward toilet drain inside R34-R15-R09-R17-R29 room_OPEN_TOP - upward opening marker,,,,,,100,100,0,11778,2344,142,Layer0,,173627
+component,机电,衣帽间,,普通墙,gray_white,A2_GAS_METER - refined meter 130x200x100 below branch,gas_meter_box,,,,,130,100,200,2752,1129,1723,Layer0,待现场核对,1193198
+group,机电,衣帽间,,管道,gray_pipe,A2_GAS_PIPE_BRANCH_OUT - upper-middle outward branch,,,,,,220,32,32,2642,1129,2123,Layer0,,173596
+group,机电,衣帽间,,管道,gray_pipe,A2_GAS_PIPE_DROP - downward branch to meter,,,,,,32,32,300,2752,1129,1973,Layer0,,173597
+group,机电,衣帽间,,管道,gray_pipe,A2_GAS_PIPE_VERTICAL - floor to ceiling near smoke shaft and wall 04,,,,,,44,44,2900,2532,1129,1693,Layer0,,173595
+component,机电,衣帽间,,普通墙,gray_white,"A2_SHAFT_SMOKE - between wall 14 11 04, 439x418x2900",shaft_concrete,,,,,439,418,2900,2173,1178,1450,Layer0,待现场核对,1193197
+component,结构,书房,,普通墙,gray_white,"A2_BEAM_V01 - vertical beam between wall 18 and wall 32, 200x400",beam_concrete,,,,,200,1069,400,7642,3343,2708,Layer0,待现场核对,1193196
+component,结构,次卧,,普通墙,gray_white,"A2_BEAM_H01 - full horizontal beam to wall 34B, 200x400",beam_concrete,,,,,11062,200,400,6746,7225,2700,Layer0,待现场核对,1193218
+component,结构,次卧,,普通墙,gray_white,A2_ROOF - flat roof slab 100mm above wall height 2900,roof_slab,,,,,12621,9107,100,5967,4554,2950,Layer0,待现场核对,1193195

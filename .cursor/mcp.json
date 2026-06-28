@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "sketchup": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "${workspaceFolder}/融创大观-3D/tools/BearNetwork-SketchUp-MCP",
+        "sketchup-mcp"
+      ]
+    }
+  }
+}

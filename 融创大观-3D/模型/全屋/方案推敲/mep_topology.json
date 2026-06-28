@@ -1,0 +1,156 @@
+{
+  "version": "20260628_v5",
+  "units": "sketchup_internal_approx_mm_div_25",
+  "notes": [
+    "生活水从 cabinet 软水 OUT 起画，管井未建模",
+    "dhw[B] 无热水回水、不做小循环",
+    "全屋模型只交到房间 RD，厨房内多用水点房间内自行分配",
+    "两联供二次侧：缓冲水箱→FP并联+分集水器5路，与生活热水完全分离",
+    "暖通控制：5区一体温控器TC-Z1~Z5，各联动FP+地暖执行器，见hvac_control.json",
+    "生活水排水：RO浓水+软水再生→厨房下水DRAIN-HUB-KIT，见mep_pipes.json"
+  ],
+  "z_layers": {
+    "soft_cold": 104.0,
+    "hot": 106.0,
+    "ac_supply": 108.0,
+    "ac_return": 106.0,
+    "floor_coil": 2.8,
+    "ro": 97.0
+  },
+  "trunk": {
+    "south_y": 48.0,
+    "north_y": 148.0,
+    "west_x": 28.0
+  },
+  "equipment_ports": {
+    "cabinet": {
+      "out_soft": { "face": "top", "fluid": "soft_cold", "role": "out", "note": "全屋软水起点" }
+    },
+    "dhw": {
+      "in_cold": { "face": "south", "fluid": "soft_cold", "role": "in" },
+      "out_hot": { "face": "south", "fluid": "hot", "role": "out" }
+    },
+    "dhw_boost": {
+      "in_hot": { "face": "south", "fluid": "hot", "role": "in", "note": "串联热水干管" },
+      "out_hot": { "face": "north", "fluid": "hot", "role": "out" }
+    },
+    "ro": {
+      "in_soft": { "face": "top", "fluid": "soft_cold", "role": "in" },
+      "out_pure": { "face": "top", "fluid": "ro", "role": "out" }
+    },
+    "pipeline": {
+      "in_pure": { "face": "west", "fluid": "ro", "role": "in" }
+    },
+    "ac_hp": {
+      "sec_supply": { "face": "north", "fluid": "hvac", "role": "out", "note": "二次供水→FP+分集水器" },
+      "sec_return": { "face": "north", "fluid": "hvac", "role": "in" }
+    },
+    "fh_manifold": {
+      "main_supply": { "face": "west", "fluid": "hvac", "role": "in" },
+      "main_return": { "face": "west", "fluid": "hvac", "role": "out" },
+      "ports": 5
+    }
+  },
+  "room_drops": [
+    {
+      "id": "RD-厨房",
+      "room": "厨房",
+      "x": 122.0,
+      "y": 74.0,
+      "z_riser": 78.0,
+      "cold": true,
+      "hot": true,
+      "terminals": ["水槽冷热水", "洗碗机进水", "厨房龙头"],
+      "note": "模型止步于此；室内终端装修分配"
+    },
+    {
+      "id": "RD-客卫",
+      "room": "客卫",
+      "x": 222.0,
+      "y": 74.0,
+      "z_riser": 76.0,
+      "cold": true,
+      "hot": true,
+      "terminals": ["洗手盆", "淋浴", "马桶进水"]
+    },
+    {
+      "id": "RD-主卫",
+      "room": "主卫",
+      "x": 447.0,
+      "y": 74.0,
+      "z_riser": 76.0,
+      "cold": true,
+      "hot": true,
+      "via_boost": true,
+      "terminals": ["洗手盆", "淋浴", "智能马桶"],
+      "note": "热水经 dhw_boost 小厨宝串联"
+    },
+    {
+      "id": "RD-洗衣区",
+      "room": "洗衣区",
+      "x": 29.0,
+      "y": 326.0,
+      "z_riser": 8.0,
+      "cold": true,
+      "hot": true,
+      "terminals": ["洗衣机", "扫地机上下水预留"]
+    }
+  ],
+  "pipe_routes_doc": "../MEP水管路由与预留点位.md",
+  "pipe_routes_json": "mep_pipes.json",
+  "ac_loops": [
+    { "id": "AC1", "label": "客厅", "fp": "fp_living" },
+    { "id": "AC2", "label": "次卧", "fp": "fp_bed2" },
+    { "id": "AC3", "label": "书房", "fp": "fp_study" },
+    { "id": "AC4", "label": "主卧", "fp": "fp_master" },
+    { "id": "AC5", "label": "厨房", "fp": "fp_kitchen" }
+  ],
+  "floor_loops": [
+    {
+      "id": "FH1",
+      "label": "客厅",
+      "pattern": "serpentine",
+      "spacing": 6.0,
+      "inset": 4.0,
+      "zones": [{ "room": "客厅", "x0": -10, "y0": 155, "x1": 230, "y1": 308, "hot_side": "north" }]
+    },
+    {
+      "id": "FH2",
+      "label": "次卧",
+      "pattern": "serpentine",
+      "spacing": 6.0,
+      "inset": 4.0,
+      "zones": [{ "room": "次卧", "x0": 235, "y0": 155, "x1": 355, "y1": 308, "hot_side": "north" }]
+    },
+    {
+      "id": "FH3",
+      "label": "书房",
+      "pattern": "serpentine",
+      "spacing": 6.0,
+      "inset": 4.0,
+      "zones": [{ "room": "书房", "x0": 275, "y0": 8, "x1": 398, "y1": 148, "hot_side": "south" }]
+    },
+    {
+      "id": "FH4",
+      "label": "主卧主卫",
+      "pattern": "serpentine_chain",
+      "spacing": 6.0,
+      "inset": 4.0,
+      "zones": [
+        { "room": "主卧", "x0": 365, "y0": 155, "x1": 488, "y1": 308, "hot_side": "north" },
+        { "room": "主卫", "x0": 405, "y0": 8, "x1": 488, "y1": 148, "hot_side": "south" }
+      ]
+    },
+    {
+      "id": "FH5",
+      "label": "厨房客卫",
+      "pattern": "serpentine_chain",
+      "spacing": 6.0,
+      "inset": 4.0,
+      "zones": [
+        { "room": "厨房", "x0": 75, "y0": 8, "x1": 168, "y1": 148, "hot_side": "south" },
+        { "room": "客卫", "x0": 175, "y0": 8, "x1": 268, "y1": 148, "hot_side": "south" }
+      ]
+    }
+  ]
+}

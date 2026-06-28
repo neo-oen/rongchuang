@@ -1,0 +1,21 @@
+# SketchUp 源文件（体积大，本地/网盘备份）
+*.skp
+*.skb
+*.skp.bak
+
+# 渲染输出（高清图体积大，按需提交预览图）
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.exr
+*.hdr
+
+# 材质库大文件
+*.skm
+
+# 保留目录结构说明与物料清单
+!README.md
+!**/*.md
+!**/.gitkeep

@@ -1,0 +1,538 @@
+{
+  "version": "20260628_v3",
+  "units": "sketchup_internal_approx_mm_div_25",
+  "mm_factor": 25,
+  "source_scripts": [
+    "tools/rebuild_mep_pipes_only.rb (pipes_v5，生活水+两联供主干)",
+    "floor_heating.json (地暖干管 FH1–FH5)",
+    "20260628_MEP设备位置.csv (设备坐标)"
+  ],
+  "notes": [
+    "正交走管：先水平后垂直，沿干管走廊 y=48(南排)/y=148(上排) 敷设",
+    "生活热水 [B] 无全屋回水、不做小循环（mep_topology 已确认）",
+    "模型 RD = Room Drop：干管立管降点；终端龙头/花洒由装修深化",
+    "RO浓水+软水再生排水→厨房下水汇总DRAIN-HUB-KIT（2026-06-28确认）",
+    "地暖盘管为方案示意；施工放线以 03 号文档回字形为准",
+    "SketchUp模型可不补画；以本文档与10号手册为准"
+  ],
+  "layers": {
+    "A2-MEP-SOFT-COLD": {
+      "label": "软水冷水",
+      "z_su": 104.0,
+      "z_mm": 2600,
+      "color": "蓝",
+      "fluid": "soft_cold"
+    },
+    "A2-MEP-HOT": {
+      "label": "生活热水",
+      "z_su": 106.0,
+      "z_mm": 2650,
+      "color": "红",
+      "fluid": "hot",
+      "note": "比软水高 2SU，同走廊并行"
+    },
+    "A2-MEP-RO": {
+      "label": "RO 纯水",
+      "z_su": 97.0,
+      "z_mm": 2425,
+      "color": "粉",
+      "fluid": "ro"
+    },
+    "A2-MEP-AC-WATER": {
+      "label": "两联供二次侧·空调/地暖供水",
+      "z_supply_su": 108.0,
+      "z_return_su": 106.0,
+      "z_supply_mm": 2700,
+      "z_return_mm": 2650,
+      "color": "绿",
+      "fluid": "hvac_secondary"
+    },
+    "A2-MEP-FLOOR-HEAT": {
+      "label": "地暖",
+      "z_su": 2.8,
+      "z_mm": 70,
+      "color": "紫",
+      "fluid": "floor_heating"
+    }
+  },
+  "trunk_corridors": {
+    "south_soft_hot": {
+      "y_su": 48.0,
+      "y_mm": 1200,
+      "label": "南排设备带干管",
+      "pipes": ["软水冷水", "生活热水"],
+      "hot_offset_su": 2.0,
+      "note": "热水走 y=50 SU；从 cabinet/[B] 设备带向东/西分支"
+    },
+    "north_hvac": {
+      "y_supply_su": 148.0,
+      "y_return_su": 144.0,
+      "y_supply_mm": 3700,
+      "label": "上排过道空调水干管",
+      "pipes": ["二次侧供水", "二次侧回水"],
+      "note": "连接 [A] 两联供 → 5×FP 并联支管"
+    },
+    "west_riser": {
+      "x_su": 28.0,
+      "x_mm": 700,
+      "label": "西侧竖向通道（示意）",
+      "note": "早期脚本经此至洗衣区；v5 以 RD-洗衣区 立管为准"
+    }
+  },
+  "pipe_specs": {
+    "soft_cold": { "material": "PPR 或不锈钢", "dn": "20–25", "insulation": "可选" },
+    "hot": { "material": "PPR 或不锈钢", "dn": "20–25", "insulation": "必须，厚≥20mm" },
+    "ro": { "material": "PE 食品级", "dn": "6–10", "insulation": "无" },
+    "hvac_secondary": { "material": "PPR 或不锈钢", "dn": "25–32", "insulation": "必须，厚≥20mm" },
+    "floor_heating": { "material": "PE-RT 阻氧", "od_mm": 16, "insulation": "地面绝热层" },
+    "condensate": { "material": "PVC/U-PVC", "dn": "20–25", "slope": "≥1%", "note": "见 condensate_routes；11 号文档" },
+    "drain_ro_reject": { "material": "PVC-U", "dn": "20", "destination": "DRAIN-HUB-KIT" },
+    "drain_softener_regen": { "material": "PVC-U", "dn": "25", "destination": "DRAIN-HUB-KIT" },
+    "drain_kitchen_sink": { "material": "PVC-U", "dn": "50", "destination": "建筑污水立管" },
+    "drain_laundry": { "material": "PVC-U", "dn": "32", "destination": "洗衣区地漏" }
+  },
+  "valves": [
+    { "id": "V01", "type": "ball", "dn": 25, "location": "市政→cabinet", "label": "全屋进水总阀" },
+    { "id": "V02", "type": "ball", "dn": 25, "location": "cabinet软水出口", "label": "软水总阀" },
+    { "id": "V03", "type": "ball", "dn": 20, "location": "dhw.in_cold", "label": "热水机冷水进" },
+    { "id": "V04", "type": "ball", "dn": 20, "location": "dhw.out_hot", "label": "热水机热水出" },
+    { "id": "V05", "type": "ball", "dn": 20, "location": "RD-厨房支路", "label": "厨房给水" },
+    { "id": "V06", "type": "ball", "dn": 20, "location": "RD-客卫支路", "label": "客卫给水" },
+    { "id": "V07", "type": "ball", "dn": 20, "location": "RD-主卫支路", "label": "主卫给水" },
+    { "id": "V08", "type": "ball", "dn": 20, "location": "RD-洗衣区支路", "label": "洗衣区给水" },
+    { "id": "V09", "type": "ball", "dn": 20, "location": "RO进水", "label": "RO检修" },
+    { "id": "V10", "type": "bypass", "dn": 25, "location": "软水机旁", "label": "软水旁通" },
+    { "id": "V-AC-M01", "type": "ball", "dn": 32, "location": "ac_hp.sec_supply", "label": "二次侧总供水" },
+    { "id": "V-AC-M02", "type": "ball", "dn": 32, "location": "ac_hp.sec_return", "label": "二次侧总回水" },
+    { "id": "V-AC-F01", "type": "ball", "dn": 25, "location": "AC1 支路", "label": "客厅 FP 供+回" },
+    { "id": "V-AC-F02", "type": "ball", "dn": 25, "location": "AC2 支路", "label": "次卧 FP 供+回" },
+    { "id": "V-AC-F03", "type": "ball", "dn": 25, "location": "AC3 支路", "label": "书房 FP 供+回" },
+    { "id": "V-AC-F04", "type": "ball", "dn": 25, "location": "AC4 支路", "label": "主卧 FP 供+回" },
+    { "id": "V-AC-F05", "type": "ball", "dn": 25, "location": "AC5 支路", "label": "厨房 FP 供+回" }
+  ],
+  "drain_hubs": [
+    {
+      "id": "DRAIN-HUB-KIT",
+      "label": "厨房下水汇总",
+      "room": "厨房",
+      "position_mm": { "x": 3050, "y": 1850 },
+      "position_note": "水槽下方厨柜内，与RD-厨房同区",
+      "accepts": ["RO浓水 R-DRAIN-01", "软水再生 R-DRAIN-02", "AC5冷凝水 R-COND-05", "厨房水槽下水 DN50"],
+      "outlet": "建筑污水立管"
+    }
+  ],
+  "routes": [
+    {
+      "id": "R-SOFT-01",
+      "system": "软水冷水",
+      "layer": "A2-MEP-SOFT-COLD",
+      "from": "cabinet.out_soft (顶)",
+      "path_summary": "水柜顶 → 南排 y=48 → 各 RD 立管 + RO 进水",
+      "waypoints_su": [
+        ["cabinet.cx", "cabinet.cy", 104],
+        ["cabinet.cx", 48, 104],
+        ["RD-*.x", 48, 104],
+        ["ro.cx", 48, 104]
+      ]
+    },
+    {
+      "id": "R-MUN-01",
+      "system": "市政进水",
+      "layer": "A2-MEP-SOFT-COLD",
+      "from": "管井/玄关",
+      "to": "cabinet.in",
+      "path_summary": "入户 DN25 → V01 → 前置 → cabinet",
+      "pipe_dn": 25,
+      "note": "管井位置待现场复核"
+    },
+    {
+      "id": "R-SOFT-02",
+      "system": "软水→生活热水",
+      "layer": "A2-MEP-SOFT-COLD",
+      "from": "南排 y=48",
+      "to": "dhw.in_cold",
+      "path_summary": "南排 y=48 → V03 → [B] 南侧冷水进",
+      "waypoints_su": [[277, 48, 104], [277, 28, 104]],
+      "pipe_dn": 20
+    },
+    {
+      "id": "R-HOT-01",
+      "system": "生活热水",
+      "layer": "A2-MEP-HOT",
+      "from": "dhw[B].out_hot (南)",
+      "path_summary": "生活热水机南口 → 南排 y=50 → 各 RD 立管；主卫经 dhw_boost 串联",
+      "waypoints_su": [
+        ["dhw.cx", "dhw.y0", 106],
+        ["dhw.cx", 50, 106],
+        ["RD-*.x", 50, 106]
+      ],
+      "special": {
+        "RD-主卫": "热水经 dhw_boost 小厨宝：south IN → north OUT → 立管至 RD"
+      }
+    },
+    {
+      "id": "R-RO-01",
+      "system": "RO 纯水",
+      "layer": "A2-MEP-RO",
+      "from": "ro.out_pure",
+      "to": "pipeline.in_pure",
+      "path_summary": "厨下 RO 顶 → 横管 y=82 → 管线机西口",
+      "waypoints_su": [
+        ["ro.cx", "ro.cy", 97],
+        ["ro.cx", 82, 97],
+        ["pipeline.x0", 82, 97],
+        ["pipeline.x0", "pipeline.cy", 97]
+      ]
+    },
+    {
+      "id": "R-DRAIN-01",
+      "system": "RO浓水",
+      "layer": "drain",
+      "from": "ro.reject",
+      "to": "DRAIN-HUB-KIT",
+      "path_summary": "RO浓水口 → DN20 PVC → 厨房下水汇总",
+      "pipe_dn": 20
+    },
+    {
+      "id": "R-DRAIN-02",
+      "system": "软水再生排水",
+      "layer": "drain",
+      "from": "cabinet.softener_regen",
+      "to": "DRAIN-HUB-KIT",
+      "path_summary": "软水机再生排水口 → DN25 PVC → 厨房下水汇总",
+      "pipe_dn": 25
+    },
+    {
+      "id": "R-KIT-01",
+      "system": "厨房给水分支",
+      "from": "RD-厨房",
+      "path_summary": "RD立管 → DN20 → 水槽冷热水 + 洗碗机软水进"
+    },
+    {
+      "id": "R-LAU-01",
+      "system": "洗衣区给水分支",
+      "from": "RD-洗衣区",
+      "path_summary": "RD立管 → 短分支 → 洗衣机 + 扫地机"
+    },
+    {
+      "id": "R-AC-01",
+      "system": "二次侧·空调供水",
+      "layer": "A2-MEP-AC-WATER",
+      "from": "ac_hp.sec_supply (北)",
+      "path_summary": "[A] 北口 → 上排 y=148 → 5×FP 西/东侧立管 → 各 FP",
+      "fp_branch_rule": "fp.cx < 250 走西墙 x=x0；否则走东墙 x=x1"
+    },
+    {
+      "id": "R-AC-02",
+      "system": "二次侧·空调回水",
+      "layer": "A2-MEP-AC-WATER",
+      "from": "各 FP",
+      "to": "ac_hp.sec_return (北)",
+      "path_summary": "FP → 上排 y=144 回水干管 → [A] 北口"
+    },
+    {
+      "id": "R-AC-03",
+      "system": "二次侧→分集水器",
+      "layer": "A2-MEP-AC-WATER",
+      "from": "ac_hp",
+      "to": "fh_manifold.main_supply",
+      "path_summary": "[A] 东侧 → 分集水器西侧总口（与 FP 并联，非串联）"
+    },
+    {
+      "id": "R-FH-01",
+      "system": "地暖干管+盘管",
+      "layer": "A2-MEP-FLOOR-HEAT",
+      "from": "fh_manifold",
+      "path_summary": "分集水器 → 各路 trunk_via（见 floor_heating.json）→ 回字形盘管",
+      "detail_file": "floor_heating.json"
+    }
+  ],
+  "condensate_routes": [
+    {
+      "id": "R-COND-01",
+      "system": "FP冷凝水",
+      "from": "fp_living (AC1)",
+      "to": "客卫地漏",
+      "pipe_dn": 25,
+      "path_summary": "客厅 FP 接水盘 → 东/南墙下行 → COND-TRUNK-U → 客卫",
+      "trunk": "COND-TRUNK-U",
+      "slope": "≥1%"
+    },
+    {
+      "id": "R-COND-02",
+      "system": "FP冷凝水",
+      "from": "fp_bed2 (AC2)",
+      "to": "客卫地漏",
+      "pipe_dn": 25,
+      "path_summary": "次卧 FP → 西墙 → COND-TRUNK-U → 客卫",
+      "trunk": "COND-TRUNK-U",
+      "slope": "≥1%"
+    },
+    {
+      "id": "R-COND-03",
+      "system": "FP冷凝水",
+      "from": "fp_study (AC3)",
+      "to": "客卫地漏",
+      "pipe_dn": 20,
+      "path_summary": "书房 FP → 短距离 → 客卫地漏",
+      "slope": "≥1%"
+    },
+    {
+      "id": "R-COND-04",
+      "system": "FP冷凝水",
+      "from": "fp_master (AC4)",
+      "to": "主卫地漏",
+      "pipe_dn": 25,
+      "path_summary": "主卧 FP → 西墙 → 主卫地漏",
+      "slope": "≥1%"
+    },
+    {
+      "id": "R-COND-05",
+      "system": "FP冷凝水",
+      "from": "fp_kitchen (AC5)",
+      "to": "DRAIN-HUB-KIT",
+      "pipe_dn": 20,
+      "path_summary": "厨房 FP → 厨房下水汇总（与 RO/软水再生同汇）",
+      "slope": "≥1%"
+    }
+  ],
+  "condensate_hubs": [
+    {
+      "id": "COND-TRUNK-U",
+      "label": "上排冷凝汇流干管",
+      "position_su": { "y": 130 },
+      "position_mm": { "y": 3250 },
+      "accepts": ["R-COND-01", "R-COND-02"],
+      "outlet": "客卫地漏 mm (5550,1850)"
+    }
+  ],
+  "fp_units": [
+    {
+      "loop": "AC1",
+      "id": "fp_living",
+      "room": "客厅",
+      "model_gb": "FP-68",
+      "cooling_w": 3600,
+      "heating_w": 5400,
+      "install": "floor_standing_LM",
+      "depth_mm": 230,
+      "position_mm": { "x": 5585, "y": 6393 },
+      "wall": "东墙",
+      "condensate_route": "R-COND-01",
+      "circuit": "L-FP1"
+    },
+    {
+      "loop": "AC2",
+      "id": "fp_bed2",
+      "room": "次卧",
+      "model_gb": "FP-51",
+      "cooling_w": 2700,
+      "heating_w": 4050,
+      "install": "floor_standing_LM",
+      "depth_mm": 230,
+      "position_mm": { "x": 6083, "y": 6086 },
+      "wall": "西墙",
+      "condensate_route": "R-COND-02",
+      "circuit": "L-FP2"
+    },
+    {
+      "loop": "AC3",
+      "id": "fp_study",
+      "room": "书房",
+      "model_gb": "FP-34",
+      "cooling_w": 1800,
+      "heating_w": 2700,
+      "install": "floor_standing_LM",
+      "depth_mm": 230,
+      "position_mm": { "x": 7774, "y": 2174 },
+      "wall": "西墙",
+      "condensate_route": "R-COND-03",
+      "circuit": "L-FP3"
+    },
+    {
+      "loop": "AC4",
+      "id": "fp_master",
+      "room": "主卧",
+      "model_gb": "FP-51",
+      "cooling_w": 2700,
+      "heating_w": 4050,
+      "install": "floor_standing_LM",
+      "depth_mm": 230,
+      "position_mm": { "x": 9014, "y": 6133 },
+      "wall": "西墙",
+      "condensate_route": "R-COND-04",
+      "circuit": "L-FP4"
+    },
+    {
+      "loop": "AC5",
+      "id": "fp_kitchen",
+      "room": "厨房",
+      "model_gb": "FP-34",
+      "cooling_w": 1800,
+      "heating_w": 2700,
+      "install": "floor_standing_LM",
+      "depth_mm": 230,
+      "position_mm": { "x": 4588, "y": 2264 },
+      "wall": "东墙",
+      "condensate_route": "R-COND-05",
+      "circuit": "L-FP5"
+    }
+  ],
+  "outlets": [
+    {
+      "id": "RD-厨房",
+      "type": "room_drop",
+      "room": "厨房",
+      "position_su": { "x": 122, "y": 74 },
+      "position_mm": { "x": 3050, "y": 1850 },
+      "z_riser_su": 78,
+      "services": ["软水冷", "热水"],
+      "terminals_planned": ["水槽冷热水", "洗碗机进水（软水）", "厨房龙头"],
+      "note": "模型止步于此；岛台/蒸烤箱等装修深化"
+    },
+    {
+      "id": "RD-客卫",
+      "type": "room_drop",
+      "room": "客卫",
+      "position_su": { "x": 222, "y": 74 },
+      "position_mm": { "x": 5550, "y": 1850 },
+      "z_riser_su": 76,
+      "services": ["软水冷", "热水"],
+      "terminals_planned": ["洗手盆", "淋浴花洒", "马桶进水"]
+    },
+    {
+      "id": "RD-主卫",
+      "type": "room_drop",
+      "room": "主卫",
+      "position_su": { "x": 447, "y": 74 },
+      "position_mm": { "x": 11175, "y": 1850 },
+      "z_riser_su": 76,
+      "services": ["软水冷", "热水"],
+      "hot_path": "dhw[B] → dhw_boost 小厨宝 → RD",
+      "terminals_planned": ["洗手盆", "淋浴", "智能马桶", "浴缸（若有）"]
+    },
+    {
+      "id": "RD-洗衣区",
+      "type": "room_drop",
+      "room": "洗衣区",
+      "position_su": { "x": 29, "y": 326 },
+      "position_mm": { "x": 725, "y": 8150 },
+      "z_riser_su": 8,
+      "services": ["软水冷", "热水"],
+      "terminals_planned": ["洗衣机", "扫地机上下水预留"]
+    },
+    {
+      "id": "OUT-RO",
+      "type": "equipment",
+      "room": "厨房",
+      "equipment": "ro",
+      "position_mm": { "x": 2825, "y": 1850 },
+      "services": ["软水进", "纯水出", "浓水排→DRAIN-HUB-KIT"],
+      "terminals_planned": ["RO 主机进出水"]
+    },
+    {
+      "id": "OUT-PIPELINE",
+      "type": "equipment",
+      "room": "厨房",
+      "equipment": "pipeline",
+      "position_mm": { "x": 4588, "y": 1960 },
+      "services": ["纯水进"],
+      "terminals_planned": ["管线机进水"]
+    },
+    {
+      "id": "OUT-WASHER",
+      "type": "equipment",
+      "room": "洗衣区",
+      "equipment": "washer",
+      "position_mm": { "x": 800, "y": 7650 },
+      "services": ["软水冷", "热水"],
+      "supply_from": "RD-洗衣区分支 R-LAU-01",
+      "drain": "DN32→洗衣区地漏",
+      "terminals_planned": ["洗衣机角阀"]
+    },
+    {
+      "id": "OUT-ROBOT",
+      "type": "equipment",
+      "room": "洗衣区",
+      "equipment": "robot",
+      "position_mm": { "x": 1250, "y": 7650 },
+      "services": ["软水冷", "排水"],
+      "drain": "DN20→洗衣区地漏",
+      "supply_from": "RD-洗衣区分支",
+      "terminals_planned": ["扫地机上下水预留"]
+    },
+    {
+      "id": "OUT-FP-01",
+      "type": "equipment",
+      "room": "客厅",
+      "equipment": "fp_living",
+      "services": ["空调供水", "空调回水", "冷凝水", "电源", "控制线"],
+      "note": "见 07 号文档"
+    },
+    {
+      "id": "OUT-FP-02",
+      "type": "equipment",
+      "room": "次卧",
+      "equipment": "fp_bed2",
+      "services": ["空调供水", "空调回水", "冷凝水", "电源", "控制线"]
+    },
+    {
+      "id": "OUT-FP-03",
+      "type": "equipment",
+      "room": "书房",
+      "equipment": "fp_study",
+      "services": ["空调供水", "空调回水", "冷凝水", "电源", "控制线"]
+    },
+    {
+      "id": "OUT-FP-04",
+      "type": "equipment",
+      "room": "主卧",
+      "equipment": "fp_master",
+      "services": ["空调供水", "空调回水", "冷凝水", "电源", "控制线"]
+    },
+    {
+      "id": "OUT-FP-05",
+      "type": "equipment",
+      "room": "厨房",
+      "equipment": "fp_kitchen",
+      "services": ["空调供水", "空调回水", "冷凝水", "电源", "控制线"]
+    },
+    {
+      "id": "OUT-FH-MANIFOLD",
+      "type": "equipment",
+      "room": "设备带",
+      "equipment": "fh_manifold",
+      "services": ["二次侧总供回", "FH1–FH5 支路", "5×电热执行器"],
+      "note": "见 03/07 号文档"
+    }
+  ],
+  "equipment_sources": [
+    {
+      "id": "cabinet",
+      "label": "水柜·前置+中净+中软",
+      "outputs": [{ "port": "out_soft", "fluid": "软水冷水", "route": "R-SOFT-01" }],
+      "drains": [{ "port": "softener_regen", "fluid": "再生废水", "route": "R-DRAIN-02" }],
+      "inputs": [{ "port": "市政进水", "fluid": "自来水", "route": "R-MUN-01" }]
+    },
+    {
+      "id": "dhw",
+      "label": "[B] 生活热水空气能",
+      "inputs": [{ "port": "in_cold", "fluid": "软水冷水", "route": "R-SOFT-02" }],
+      "outputs": [{ "port": "out_hot", "fluid": "热水", "route": "R-HOT-01" }]
+    },
+    {
+      "id": "dhw_boost",
+      "label": "主卫小厨宝",
+      "inputs": [{ "port": "in_hot", "fluid": "热水干管" }],
+      "outputs": [{ "port": "out_hot", "fluid": "热水", "to": "RD-主卫" }]
+    },
+    {
+      "id": "ac_hp",
+      "label": "[A] 两联供+缓冲水箱",
+      "outputs": [
+        { "port": "sec_supply", "fluid": "hvac", "routes": ["R-AC-01", "R-AC-03"] }
+      ],
+      "inputs": [{ "port": "sec_return", "fluid": "hvac", "route": "R-AC-02" }]
+    }
+  ]
+}
