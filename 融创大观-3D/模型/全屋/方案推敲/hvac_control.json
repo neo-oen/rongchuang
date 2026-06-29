@@ -1,11 +1,19 @@
 {
-  "version": "20260628_v2",
+  "version": "20260628_v3",
   "units": "sketchup_internal_approx_mm_div_25",
   "notes": [
-    "每分区 1 块一体温控器 TC：同时调度 FP + 地暖电热执行器",
-    "卫间无 FP、无 TC：主卫 FH4→TC-Z4，客卫 FH5→TC-Z5",
-    "制冷时地暖执行器强制关闭（互锁）"
+    "每分区 1 块一体温控器 TC：同时调度 FP + 地暖电热执行器 + 新风电动风阀 MD",
+    "卫间无 FP、无 TC：主卫 FH4/FA4→TC-Z4，客卫 FH5/FA5→TC-Z5",
+    "制冷时地暖执行器强制关闭（互锁）",
+    "新风：1台ERV + 5路FA，见 fresh_air.json"
   ],
+  "erv_host": {
+    "id": "erv",
+    "label": "全热交换新风机",
+    "nominal_flow_m3h": 350,
+    "control": "central_module_at_device_band",
+    "detail_file": "fresh_air.json"
+  },
   "manifold": {
     "id": "fh_manifold",
     "label": "地暖分集水器",
@@ -14,6 +22,12 @@
     "actuator_type": "electronic_thermal",
     "actuator_count": 5,
     "cabinet": "设备带分集水器柜，含端子排/总线模块"
+  },
+  "fa_manifold": {
+    "id": "fa_manifold",
+    "label": "新风分风箱",
+    "damper_count": 5,
+    "cabinet": "与地暖端子排同柜或相邻，含新风集控模块"
   },
   "zones": [
     {
@@ -27,7 +41,8 @@
         "avoid": ["FP东墙直吹", "南窗热辐射"]
       },
       "fp": { "loop": "AC1", "equipment": "fp_living", "model_gb": "FP-68", "cooling_w": 3600, "heating_w": 5400 },
-      "floor_heating": { "loop": "FH1", "actuator_port": 1 }
+      "floor_heating": { "loop": "FH1", "actuator_port": 1 },
+      "fresh_air": { "loop": "FA1", "damper": "MD-Z1", "design_flow_m3h": 90, "includes_rooms_supply": ["客厅", "玄关溢流"] }
     },
     {
       "id": "Z2",
@@ -40,7 +55,8 @@
         "avoid": ["FP西墙同墙"]
       },
       "fp": { "loop": "AC2", "equipment": "fp_bed2", "model_gb": "FP-51", "cooling_w": 2700, "heating_w": 4050 },
-      "floor_heating": { "loop": "FH2", "actuator_port": 2 }
+      "floor_heating": { "loop": "FH2", "actuator_port": 2 },
+      "fresh_air": { "loop": "FA2", "damper": "MD-Z2", "design_flow_m3h": 55 }
     },
     {
       "id": "Z3",
@@ -53,7 +69,8 @@
         "avoid": ["FP西墙同墙"]
       },
       "fp": { "loop": "AC3", "equipment": "fp_study", "model_gb": "FP-34", "cooling_w": 1800, "heating_w": 2700 },
-      "floor_heating": { "loop": "FH3", "actuator_port": 3 }
+      "floor_heating": { "loop": "FH3", "actuator_port": 3 },
+      "fresh_air": { "loop": "FA3", "damper": "MD-Z3", "design_flow_m3h": 50 }
     },
     {
       "id": "Z4",
@@ -71,6 +88,12 @@
         "actuator_port": 4,
         "includes_rooms": ["主卧", "主卫"],
         "note": "主卫无独立TC，联动TC-Z4"
+      },
+      "fresh_air": {
+        "loop": "FA4",
+        "damper": "MD-Z4",
+        "design_flow_m3h": 70,
+        "includes_rooms_exhaust": ["主卧", "主卫"]
       }
     },
     {
@@ -89,17 +112,28 @@
         "actuator_port": 5,
         "includes_rooms": ["厨房", "客卫"],
         "note": "客卫无独立TC，联动TC-Z5"
+      },
+      "fresh_air": {
+        "loop": "FA5",
+        "damper": "MD-Z5",
+        "design_flow_m3h": 65,
+        "includes_rooms_exhaust": ["厨房", "客卫"],
+        "note": "送风避灶台；油烟机强排独立"
       }
     }
   ],
   "control_modes": [
-    { "id": "heat_comfort", "fp": "low_or_off", "fh_actuator": "open", "label": "制热·舒适（地暖为主）" },
-    { "id": "heat_fast", "fp": "medium", "fh_actuator": "open", "label": "制热·快速（联合）" },
-    { "id": "cool", "fp": "auto", "fh_actuator": "forced_closed", "label": "制冷（地暖互锁关）" }
+    { "id": "heat_comfort", "fp": "low_or_off", "fh_actuator": "open", "fa_damper": "open_low", "erv": "low", "label": "制热·舒适" },
+    { "id": "heat_fast", "fp": "medium", "fh_actuator": "open", "fa_damper": "open", "erv": "medium", "label": "制热·快速" },
+    { "id": "cool", "fp": "auto", "fh_actuator": "forced_closed", "fa_damper": "open_min", "erv": "low", "label": "制冷（地暖互锁关）" },
+    { "id": "vent_only", "fp": "off", "fh_actuator": "closed", "fa_damper": "open", "erv": "medium", "label": "仅通风" },
+    { "id": "away", "fp": "off", "fh_actuator": "closed", "fa_damper": "closed", "erv": "standby", "label": "离家" }
   ],
   "wiring": {
     "thermostat_to_fp": "≥3芯专用控制线，每区独立",
     "thermostat_to_actuator": "弱电星型：设备带端子排 ↔ 各TC",
+    "thermostat_to_fa_damper": "≥2芯风阀控制线或总线，每区独立",
+    "erv_to_central_module": "RS485 或 0-10V 至设备带新风集控模块",
     "actuator_to_manifold": "执行器装于分集水器各支路球阀上"
   }
 }

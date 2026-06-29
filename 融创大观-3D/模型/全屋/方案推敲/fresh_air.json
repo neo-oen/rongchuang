@@ -1,0 +1,161 @@
+{
+  "version": "20260628_v1",
+  "units": "sketchup_internal_approx_mm_div_25",
+  "design_status": "documented_only",
+  "notes": [
+    "1台全热交换主机 + 5路分区 FA1–FA5，与 FP/TC/FH 一一对应",
+    "每路1个电动风阀 MD-Z1~Z5，由 TC-Z1~Z5 联动（一体温控）",
+    "低位送风 ~300mm AFF，高位排风吊顶内",
+    "SketchUp 风管可不补画；以 08 号文档为准"
+  ],
+  "host": {
+    "id": "erv",
+    "label": "全热交换新风机",
+    "type": "ERV",
+    "nominal_flow_m3h": 350,
+    "external_static_pa": 150,
+    "heat_recovery": "enthalpy",
+    "location_su": { "cx": 250, "cy": 26.6 },
+    "location_mm": { "x": 6250, "y": 665 },
+    "platform_note": "厨房后北侧设备带，与 ac_hp/dhw 并列",
+    "outdoor_ports": ["fresh_air_in", "exhaust_air_out"],
+    "condensate": { "dn_mm": 20, "route": "platform_drain", "doc": "11-冷凝水 §9" }
+  },
+  "zones": [
+    {
+      "id": "FA1",
+      "hvac_zone": "Z1",
+      "tc": "TC-Z1",
+      "fp_loop": "AC1",
+      "fh_loop": "FH1",
+      "rooms_supply": ["客厅", "玄关溢流"],
+      "rooms_exhaust": ["客厅"],
+      "design_flow_m3h": 90,
+      "damper": { "id": "MD-Z1", "type": "motorized", "normally": "closed" },
+      "supply": { "id": "SA-Z1", "height_mm": 300, "wall_tendency": "客厅西墙或北墙低位", "dn_mm": 160 },
+      "exhaust": { "id": "EA-Z1", "height_mm": "吊顶", "wall_tendency": "客厅南窗上沿吊顶", "dn_mm": 160 }
+    },
+    {
+      "id": "FA2",
+      "hvac_zone": "Z2",
+      "tc": "TC-Z2",
+      "fp_loop": "AC2",
+      "fh_loop": "FH2",
+      "rooms_supply": ["次卧"],
+      "rooms_exhaust": ["次卧"],
+      "design_flow_m3h": 55,
+      "damper": { "id": "MD-Z2", "type": "motorized", "normally": "closed" },
+      "supply": { "id": "SA-Z2", "height_mm": 300, "wall_tendency": "次卧东墙低位", "dn_mm": 160 },
+      "exhaust": { "id": "EA-Z2", "height_mm": "吊顶", "wall_tendency": "次卧北墙吊顶", "dn_mm": 160 }
+    },
+    {
+      "id": "FA3",
+      "hvac_zone": "Z3",
+      "tc": "TC-Z3",
+      "fp_loop": "AC3",
+      "fh_loop": "FH3",
+      "rooms_supply": ["书房"],
+      "rooms_exhaust": ["书房"],
+      "design_flow_m3h": 50,
+      "damper": { "id": "MD-Z3", "type": "motorized", "normally": "closed" },
+      "supply": { "id": "SA-Z3", "height_mm": 300, "wall_tendency": "书房东墙低位", "dn_mm": 160 },
+      "exhaust": { "id": "EA-Z3", "height_mm": "吊顶", "wall_tendency": "书房北墙吊顶", "dn_mm": 160 }
+    },
+    {
+      "id": "FA4",
+      "hvac_zone": "Z4",
+      "tc": "TC-Z4",
+      "fp_loop": "AC4",
+      "fh_loop": "FH4",
+      "rooms_supply": ["主卧"],
+      "rooms_exhaust": ["主卧", "主卫"],
+      "design_flow_m3h": 70,
+      "damper": { "id": "MD-Z4", "type": "motorized", "normally": "closed" },
+      "supply": { "id": "SA-Z4", "height_mm": 300, "wall_tendency": "主房东墙低位", "dn_mm": 160 },
+      "exhaust": [
+        { "id": "EA-Z4", "room": "主卧", "dn_mm": 160 },
+        { "id": "EA-Z4-BATH", "room": "主卫", "dn_mm": 100 }
+      ]
+    },
+    {
+      "id": "FA5",
+      "hvac_zone": "Z5",
+      "tc": "TC-Z5",
+      "fp_loop": "AC5",
+      "fh_loop": "FH5",
+      "rooms_supply": ["厨房"],
+      "rooms_exhaust": ["厨房", "客卫"],
+      "design_flow_m3h": 65,
+      "damper": { "id": "MD-Z5", "type": "motorized", "normally": "closed" },
+      "supply": { "id": "SA-Z5", "height_mm": 300, "wall_tendency": "厨房西墙低位，避灶台", "dn_mm": 160 },
+      "exhaust": [
+        { "id": "EA-Z5", "room": "厨房", "dn_mm": 160 },
+        { "id": "EA-Z5-BATH", "room": "客卫", "dn_mm": 100 }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "R-FA-M01",
+      "system": "新风送风主管",
+      "from": "erv.supply",
+      "to": "manifold_supply",
+      "pipe_dn_mm": 250,
+      "path_summary": "erv → Φ250 送风主管 → 分风箱（MD-Z1~Z5）"
+    },
+    {
+      "id": "R-FA-M02",
+      "system": "新风回风主管",
+      "from": "各 EA 汇总",
+      "to": "erv.return",
+      "pipe_dn_mm": 250,
+      "path_summary": "各排风口 → Φ250 回风主管 → erv"
+    },
+    {
+      "id": "R-FA-01",
+      "system": "FA1 客厅",
+      "zone": "FA1",
+      "damper": "MD-Z1",
+      "pipe_dn_mm": 160,
+      "path_summary": "分风箱 → 北过道吊顶 → 客厅低位 SA-Z1"
+    },
+    {
+      "id": "R-FA-02",
+      "system": "FA2 次卧",
+      "zone": "FA2",
+      "damper": "MD-Z2",
+      "pipe_dn_mm": 160
+    },
+    {
+      "id": "R-FA-03",
+      "system": "FA3 书房",
+      "zone": "FA3",
+      "damper": "MD-Z3",
+      "pipe_dn_mm": 160
+    },
+    {
+      "id": "R-FA-04",
+      "system": "FA4 主卧主卫",
+      "zone": "FA4",
+      "damper": "MD-Z4",
+      "pipe_dn_mm": 160,
+      "branch_bath_dn_mm": 100
+    },
+    {
+      "id": "R-FA-05",
+      "system": "FA5 厨房客卫",
+      "zone": "FA5",
+      "damper": "MD-Z5",
+      "pipe_dn_mm": 160,
+      "branch_bath_dn_mm": 100
+    }
+  ],
+  "manifold": {
+    "id": "fa_manifold",
+    "label": "新风分风箱",
+    "location_tendency": "设备带或上排过道吊顶",
+    "damper_count": 5,
+    "cabinet": "含检修口，与 fh 分集水器柜分区"
+  },
+  "total_design_flow_m3h": 330
+}

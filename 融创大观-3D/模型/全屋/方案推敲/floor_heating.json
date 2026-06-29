@@ -1,29 +1,60 @@
 {
-  "version": "20260628_v8_huizi_doc",
+  "version": "20260628_v9_elevation_bath",
   "design_status": "documented_only",
-  "design_note": "2026-06-28 铺管方式：回字形（单管矩形螺旋），非双管平行；暂停 SU 自动画管",
+  "design_note": "2026-06-28 干区±0；卫间门槛齐平、门内-10~15mm；主卫客卫满铺地暖；地面不做隔音；卫间双道防水+地暖工序",
+  "elevation": {
+    "dry_finish": "±0",
+    "bathroom_threshold_top": "±0_flush_with_dry",
+    "bathroom_interior_finish": "-10_to_-15mm_relative_to_dry",
+    "floor_sound_insulation": false,
+    "threshold_water_stop_required": true,
+    "coil_avoid_under_threshold": true
+  },
+  "bathroom_build_sequence": [
+    "base_level_and_slope",
+    "first_waterproof_and_water_test",
+    "waterproof_protection_layer",
+    "floor_heating_coils_full_coverage",
+    "pressurized_backfill",
+    "secondary_slope",
+    "second_waterproof_and_water_test",
+    "tile"
+  ],
+  "bathroom_slopes": {
+    "shower_percent": "1.5-2",
+    "non_shower_percent": "1-1.5",
+    "direction": "door_and_walls_to_floor_drain"
+  },
+  "dry_build_up_mm": {
+    "insulation": 25,
+    "pipe_od": 16,
+    "cover_over_pipe": 40,
+    "finish_tile": 10,
+    "total_approx": "80-95"
+  },
+  "no_floor_heating_zones": ["玄关", "衣帽间", "洗衣区", "封闭阳台"],
   "wall_inset_su": 5.0,
   "floor_z": 2.8,
   "south_chase_y": 42.0,
   "north_row_entry_y": 157.0,
   "south_row_entry_y": 147.0,
   "rooms": {
-    "客厅": { "x0": 93, "x1": 228, "y0": 157, "y1": 307, "hot_side": "north" },
-    "次卧": { "x0": 238, "x1": 345, "y0": 157, "y1": 307, "hot_side": "north" },
-    "主卧": { "x0": 355, "x1": 470, "y0": 157, "y1": 307, "hot_side": "north" },
-    "书房": { "x0": 277, "x1": 393, "y0": 8, "y1": 147, "hot_side": "south" },
-    "厨房": { "x0": 77, "x1": 167, "y0": 8, "y1": 147, "hot_side": "south" },
-    "客卫": { "x0": 177, "x1": 267, "y0": 8, "y1": 147, "hot_side": "south" },
-    "主卫": { "x0": 408, "x1": 486, "y0": 8, "y1": 147, "hot_side": "south" }
+    "客厅": { "x0": 93, "x1": 228, "y0": 157, "y1": 307, "hot_side": "north", "loop": "FH1", "type": "dry_heated" },
+    "次卧": { "x0": 238, "x1": 345, "y0": 157, "y1": 307, "hot_side": "north", "loop": "FH2", "type": "dry_heated" },
+    "主卧": { "x0": 355, "x1": 470, "y0": 157, "y1": 307, "hot_side": "north", "loop": "FH4", "type": "dry_heated" },
+    "书房": { "x0": 277, "x1": 393, "y0": 8, "y1": 147, "hot_side": "south", "loop": "FH3", "type": "dry_heated" },
+    "厨房": { "x0": 77, "x1": 167, "y0": 8, "y1": 147, "hot_side": "south", "loop": "FH5", "type": "dry_heated" },
+    "客卫": { "x0": 177, "x1": 267, "y0": 8, "y1": 147, "hot_side": "south", "loop": "FH5", "type": "bathroom_full_heated", "waterproof": "double_layer" },
+    "主卫": { "x0": 408, "x1": 486, "y0": 8, "y1": 147, "hot_side": "south", "loop": "FH4", "type": "bathroom_full_heated", "waterproof": "double_layer" }
   },
   "doorways": {
     "客厅_南入口": { "x": 106, "y": 157, "note": "上排客厅南界门洞" },
     "次卧_南入口": { "x": 296, "y": 157 },
     "主卧_南入口": { "x": 430, "y": 157 },
-    "主卧_进主卫": { "x": 430, "y": 152, "note": "主卧→主卫门" },
+    "主卧_进主卫": { "x": 430, "y": 152, "note": "主卧→主卫；门槛止水坎；管绕开门槛下" },
     "书房_南入口": { "x": 330, "y": 147 },
     "厨房_南入口": { "x": 122, "y": 147 },
-    "厨房_进客卫": { "x": 172, "y": 74, "note": "厨房东墙→客卫门" },
+    "厨房_进客卫": { "x": 172, "y": 74, "note": "厨房→客卫；仅盘管联通；干管禁止" },
     "分集水器_出": { "x": 277, "y": 42 },
     "分集水器_设备口": { "x": 275, "y": 34, "note": "设备带北墙门洞 R07" }
   },
@@ -34,6 +65,7 @@
       "zones": ["客厅"],
       "trunk_via": [[277, 42], [277, 157], [106, 157]],
       "entry_door": "客厅_南入口",
+      "est_pipe_length_m": 50,
       "note": "干管北上排过道进客厅，不经客卫"
     },
     {
@@ -41,14 +73,16 @@
       "label": "次卧",
       "zones": ["次卧"],
       "trunk_via": [[277, 42], [296, 42]],
-      "entry_door": "次卧_南入口"
+      "entry_door": "次卧_南入口",
+      "est_pipe_length_m": 35
     },
     {
       "id": "FH3",
       "label": "书房",
       "zones": ["书房"],
       "trunk_via": [[277, 42], [330, 42]],
-      "entry_door": "书房_南入口"
+      "entry_door": "书房_南入口",
+      "est_pipe_length_m": 35
     },
     {
       "id": "FH4",
@@ -56,7 +90,10 @@
       "zones": ["主卧", "主卫"],
       "trunk_via": [[277, 42], [430, 42]],
       "entry_door": "主卧_南入口",
-      "zone_link": { "from": "主卧", "to": "主卫", "door": "主卧_进主卫" }
+      "est_pipe_length_m": 65,
+      "zone_link": { "from": "主卧", "to": "主卫", "door": "主卧_进主卫" },
+      "bathroom_full_heating": ["主卫"],
+      "note": "主卫满铺；双道防水工序"
     },
     {
       "id": "FH5",
@@ -64,7 +101,10 @@
       "zones": ["厨房", "客卫"],
       "trunk_via": [[277, 42], [122, 42]],
       "entry_door": "厨房_南入口",
-      "zone_link": { "from": "厨房", "to": "客卫", "door": "厨房_进客卫" }
+      "est_pipe_length_m": 55,
+      "zone_link": { "from": "厨房", "to": "客卫", "door": "厨房_进客卫" },
+      "bathroom_full_heating": ["客卫"],
+      "note": "客卫满铺；双道防水工序"
     }
   ],
   "coil": {
@@ -74,8 +114,11 @@
     "pattern": "huizi",
     "pattern_label": "回字形：单管矩形螺旋，远端180°折返，沿内圈反向螺旋回程，平面0交叉",
     "pipe_od_mm": 16,
-    "spacing_mm": 200
+    "spacing_mm": 200,
+    "pressure_test_mpa": 0.6,
+    "pressure_test_min": 30
   },
   "forbidden_trunk_rooms": ["客卫"],
-  "forbidden_trunk_doors": ["厨房_进客卫"]
+  "forbidden_trunk_doors": ["厨房_进客卫"],
+  "forbidden_coil_under_threshold": true
 }

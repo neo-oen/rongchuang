@@ -529,10 +529,18 @@
     {
       "id": "ac_hp",
       "label": "[A] 两联供+缓冲水箱",
+      "generic_spec": {
+        "cooling_kw_nominal": 16,
+        "heating_kw_nominal_at_minus2c": 18,
+        "buffer_tank_l": 100,
+        "secondary_pump": "≥8m head, ≥2.5 m³/h",
+        "design_std": "DB34/T 3949-2021"
+      },
       "outputs": [
         { "port": "sec_supply", "fluid": "hvac", "routes": ["R-AC-01", "R-AC-03"] }
       ],
-      "inputs": [{ "port": "sec_return", "fluid": "hvac", "route": "R-AC-02" }]
+      "inputs": [{ "port": "sec_return", "fluid": "hvac", "route": "R-AC-02" }],
+      "drains": [{ "port": "defrost_condensate", "route": "platform_drain", "note": "见 11 号 §9" }]
     }
   ]
 }
